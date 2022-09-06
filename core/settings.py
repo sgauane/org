@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.reg',
+    'apps.autenticacao',
+    'django_countries',
+     'bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -53,12 +56,12 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'core.urls'
 # LOGIN_REDIRECT_URL = "home"  # Route defined in home/urls.py
 # LOGOUT_REDIRECT_URL = "home"  # Route defined in home/urls.py
-# TEMPLATE_DIR = os.path.join(CORE_DIR, "apps/templates")  # ROOT dir for templates
+TEMPLATE_DIR = os.path.join(CORE_DIR, "apps/templates")  # ROOT dir for templates
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATE_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
