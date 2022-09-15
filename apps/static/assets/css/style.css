@@ -1,0 +1,13 @@
+body {
+ //background-image: url("../images/background1.jpg");
+  background-color: #f4f7fa;
+}
+
+div {
+}
+
+.container {
+    height: 100vh;
+    overflow: auto;
+    background-color: #ffffff;
+}
