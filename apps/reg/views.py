@@ -1,6 +1,8 @@
+from django.contrib.auth.models import User
 from django.db import transaction
 from django.shortcuts import render, redirect
 
+from apps.reg.OrgDao import OrgDao
 from apps.reg.forms import OrganizacaoForm, EnderecoForm, ImagemForm
 from apps.reg.models import Localizacao, Endereco, Organizacao
 
@@ -141,3 +143,18 @@ def org_avatar(request):
     data["success"] = success
     data["skip"] = skip
     return render(request,'reg/imagem/form.html', data)
+
+
+def org_show(request):
+    dao = OrgDao()
+    context = {}
+
+    user = User.objects.get(username=request.user)
+    organizacao = dao.getOrg(user)
+
+    if organizacao==None:
+        organizacao = Organizacao()
+
+    context["organizacao"] = organizacao
+
+    return render(request, "reg/org/show.html", context)

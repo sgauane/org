@@ -33,18 +33,23 @@ class ImagemForm(forms.ModelForm):
 
 class OrganizacaoForm(forms.ModelForm):
     nome = forms.CharField(
+
         widget=forms.TextInput(
             attrs={
                 "placeolder": "Nome",
-                "class": "form-control"
+                "class": "form-control",
+
             }
         )
     )
     nuit = forms.CharField(
+        max_length=9,
             widget=forms.TextInput(
                 attrs={
                     "placeolder": "Nuit",
-                    "class": "form-control"
+                    "class": "form-control",
+                    "type": "number",
+                    "max_lenth": "9"
                 }
             )
         )
@@ -54,7 +59,8 @@ class OrganizacaoForm(forms.ModelForm):
                         "placeolder": "Abreviatura",
                         "class": "form-control"
                     }
-                )
+                ),
+                required=False
             )
     descricao = forms.CharField(
         widget=forms.TextInput(
@@ -62,7 +68,8 @@ class OrganizacaoForm(forms.ModelForm):
                 "placeolder": "Descricao",
                 "class": "form-control"
             }
-        )
+        ),
+                required=False
     )
     tipo_organizacao = forms.ModelChoiceField(
         queryset=TipoOrganizacao.objects.all(),
@@ -73,10 +80,39 @@ class OrganizacaoForm(forms.ModelForm):
             }
         )
     )
+    data_constituicao = forms.DateField(
+        widget=forms.DateInput(
+            attrs={
+                "placeolder": "Data de Constituicao",
+                "class": "form-control",
+                "type": "date"
+            }
+        ),
+                required=False
+    )
+    data_publicacao = forms.DateField(
+        widget=forms.DateInput(
+            attrs={
+                "placeolder": "Data da Publicacao",
+                "class": "form-control",
+                "type": "date"
+            }
+        ),
+                required=False
+    )
+    numero_br = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeolder": "Numero do Boletim da Republica",
+                "class": "form-control"
+            }
+        ),
+                required=False
+    )
 
     class Meta:
         model = Organizacao
-        fields = ['nome','nuit','abreviatura','descricao','tipo_organizacao']
+        fields = ['nuit','nome','abreviatura','descricao','tipo_organizacao', 'data_constituicao', 'data_publicacao','numero_br']
 
 
 class EnderecoForm(forms.Form):

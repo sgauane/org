@@ -25,4 +25,5 @@ urlpatterns = [
     path("", include("apps.autenticacao.urls")),
     path('', include("apps.reg.urls")),
     path('', include("apps.home.urls")),
+    # path('', include("apps.sitio.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

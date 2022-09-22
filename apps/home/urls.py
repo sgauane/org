@@ -10,7 +10,8 @@ urlpatterns = [
 
     # The home page
     path('dashboard/', index, name='home'),
-    path('', h, name='h'),
+    path('h/', h, name='h'),
+    path('', sitio_inicio, name='sitio_inicio'),
 
     # Matches any html file
     re_path(r'^.*\.*', pages, name='pages'),

@@ -10,7 +10,7 @@ from django.template import loader
 from django.urls import reverse
 
 
-@login_required(login_url="/login/")
+@login_required(login_url="/entrar/")
 def index(request):
     context = {'segment': 'index'}
 
@@ -49,3 +49,12 @@ def pages(request):
     except:
         html_template = loader.get_template('home/page-500.html')
         return HttpResponse(html_template.render(context, request))
+
+
+def sitio_inicio(request):
+    context = {}
+
+    html_template = loader.get_template('sitio/index.html')
+    return HttpResponse(html_template.render(context, request))
+
+

@@ -17,6 +17,10 @@ def login_view(request):
 
     msg = None
 
+    print("Autenticado?", request.user.is_authenticated)
+    if request.user.is_authenticated:
+        return redirect('/dashboard/')
+
     if request.method == "POST":
         if form.is_valid():
             username = form.cleaned_data.get('username')
@@ -26,6 +30,8 @@ def login_view(request):
 
             if user is not None:
                 login(request, user)
+                print("Loggedin as >>>", user)
+                return redirect('/dashboard/')
 
     data["form"] = form
     return render(request, "account/login.html", data)
@@ -48,10 +54,10 @@ def register_user(request):
             success = True
 
             #compose token and save
-            print('compose token')
-            tk = saveToken(user)
-            send_email(request)
-            print('email sent')
+            # print('compose token')
+            # tk = saveToken(user)
+            # send_email(request)
+            # print('email sent')
 
             return redirect('/entrar/')
 

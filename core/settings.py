@@ -39,9 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.reg',
     'apps.home',
+    'apps.sitio',
     'apps.autenticacao',
     'django_countries',
-     'bootstrap5',
+    'bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -55,8 +56,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'core.urls'
-# LOGIN_REDIRECT_URL = "home"  # Route defined in home/urls.py
-# LOGOUT_REDIRECT_URL = "home"  # Route defined in home/urls.py
+LOGIN_REDIRECT_URL = "home"  # Route defined in home/urls.py
+LOGOUT_REDIRECT_URL = "home"  # Route defined in home/urls.py
 TEMPLATE_DIR = os.path.join(CORE_DIR, "apps/templates")  # ROOT dir for templates
 
 TEMPLATES = [

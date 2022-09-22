@@ -1,17 +1,59 @@
-{% load bootstrap5 %}
+{% extends "layouts/base.html" %}
+
+{% block title %} Perfil {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
-    <div class="container">
-        <div class="row my-5">
-            <div class="col-md-12">
-                <form method="post" class="form">
-                    {% csrf_token %}
-                    {% bootstrap_form form %}
-                    {% buttons %}
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    {% endbuttons %}
-                </form>
+<section class="pcoded-content ">
+    <div class="pcoded-inner-content">
+
+        <!--  Cabecalho  -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">Organizacao</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="javascript:">Organizacao</a></li>
+                            <li class="breadcrumb-item"><a href="javascript:">Registar</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <!--  Conteudo -->
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="container">
+                    <div class="row my-5">
+                        <div class="col-md-12">
+                            <form method="post" class="form">
+                                {% csrf_token %}
+                                {{ form }}
+<br/>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
     </div>
-{% endblock %}
+
+</section>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+
+{% endblock javascripts %}
