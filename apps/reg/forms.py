@@ -5,30 +5,35 @@ from apps.reg.models import Imagem, TipoDocumento, Organizacao, TipoOrganizacao,
 
 
 class ImagemForm(forms.ModelForm):
-    # x = forms.FloatField(widget=forms.HiddenInput())
-    # y = forms.FloatField(widget=forms.HiddenInput())
-    # width = forms.FloatField(widget=forms.HiddenInput())
-    # height = forms.FloatField(widget=forms.HiddenInput())
+    ficheiro = forms.ImageField(
+        widget=forms.FileInput(
+        attrs={
+            "class": "form-control"
+        }
+    ))
+    x = forms.FloatField(widget=forms.HiddenInput())
+    y = forms.FloatField(widget=forms.HiddenInput())
+    width = forms.FloatField(widget=forms.HiddenInput())
+    height = forms.FloatField(widget=forms.HiddenInput())
 
     class Meta:
         model = Imagem
-        fields = ('ficheiro',)
-        # fields = ('ficheiro', 'x', 'y', 'width', 'height',)
+        fields = ('ficheiro', 'x', 'y', 'width', 'height',)
 
-    # def save(self):
-    #     photo = super(ImagemForm, self).save()
-    #
-    #     x = self.cleaned_data.get('x')
-    #     y = self.cleaned_data.get('y')
-    #     w = self.cleaned_data.get('width')
-    #     h = self.cleaned_data.get('height')
-    #
-    #     image = Image.open(photo.file)
-    #     cropped_image = image.crop((x, y, w + x, h + y))
-    #     resized_image = cropped_image.resize((200, 200), Image.ANTIALIAS)
-    #     resized_image.save(photo.file.path)
-    #
-    #     return photo
+    def save(self):
+        photo = super(ImagemForm, self).save()
+
+        x = self.cleaned_data.get('x')
+        y = self.cleaned_data.get('y')
+        w = self.cleaned_data.get('width')
+        h = self.cleaned_data.get('height')
+
+        image = Image.open(photo.file)
+        cropped_image = image.crop((x, y, w + x, h + y))
+        resized_image = cropped_image.resize((200, 200), Image.ANTIALIAS)
+        resized_image.save(photo.file.path)
+
+        return photo
 
 
 class OrganizacaoForm(forms.ModelForm):
@@ -148,7 +153,8 @@ class EnderecoForm(forms.Form):
                 "placeolder": "Edificio",
                 "class": "form-control"
             }
-        )
+        ),
+                required=False
     )
     numero_edificio = forms.CharField(
         widget=forms.TextInput(
@@ -156,7 +162,17 @@ class EnderecoForm(forms.Form):
                 "placeolder": "Numero",
                 "class": "form-control"
             }
-        )
+        ),
+                required=False
+    )
+    quarteirao = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeolder": "Quarteirao",
+                "class": "form-control"
+            }
+        ),
+                required=False
     )
     andar = forms.CharField(
         widget=forms.TextInput(
@@ -164,7 +180,8 @@ class EnderecoForm(forms.Form):
                 "placeolder": "Andar",
                 "class": "form-control"
             }
-        )
+        ),
+                required=False
     )
     flat = forms.CharField(
         widget=forms.TextInput(
@@ -172,7 +189,8 @@ class EnderecoForm(forms.Form):
                 "placeolder": "Flat",
                 "class": "form-control"
             }
-        )
+        ),
+                required=False
     )
     numero_casa = forms.CharField(
         widget=forms.TextInput(
@@ -182,3 +200,22 @@ class EnderecoForm(forms.Form):
             }
         )
     )
+
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['bairro'].queryset = Bairro.objects.none()
+    #     print('xxxxxxxxxxxxxxxxxxxxxxxxx',self.data)
+    #
+    #     if 'cidade' in self.data:
+    #         print('---------------------------')
+    #         try:
+    #             print('xxxxxxxxxxxxxxxxxxxxxxxxx')
+    #             cidade_id = int(self.data.get('cidade'))
+    #             print(">>>>>>>>>>>>>>>>>>>", cidade_id)
+    #             self.fields['bairro'].queryset = Bairro.objects.filter(
+    #                 cidade_id=cidade_id
+    #             )
+    #         except (ValueError, TypeError):
+    #             pass
+    #     else:
+    #         print(*args)

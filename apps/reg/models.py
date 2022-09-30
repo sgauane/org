@@ -97,7 +97,7 @@ def user_directory_path(instance, ficheiro):
 
 class Imagem(ModeloBase):
     descricao = models.CharField(max_length=255, blank=True, null=True)
-    ficheiro = models.ImageField(upload_to='imagens', null=True)
+    ficheiro = models.ImageField(upload_to='imagens')
 
     class Meta:
         verbose_name = "Foto"
@@ -160,6 +160,6 @@ class Endereco(ModeloBase):
         verbose_name_plural = "Enderecos"
 
     def __str__(self):
-        return self.localizacao
+        return self.numero_casa
 
 

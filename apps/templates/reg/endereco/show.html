@@ -21,6 +21,7 @@
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
                             <li class="breadcrumb-item"><a href="javascript:">Organizacao</a></li>
+                            <li class="breadcrumb-item"><a href="javascript:">Endereco</a></li>
                             <li class="breadcrumb-item"><a href="javascript:">Detalhes</a></li>
                         </ul>
                     </div>
@@ -50,129 +51,143 @@
 
                         <hr/>
 
-                        {% if organizacao.id == None %}
+                        {% if endereco.id == None %}
                         <div class="row justify-content-center">
                             <p class="d-inline-block text-truncate font-weight-bold m float-right">
                                 Registo nao encontrado. Crie
-                                <a href="{% url 'org_register' %}">aqui</a>
+                                <a href="{% url 'org_address_register' %}">aqui</a>
                             </p>
 
                         </div>
                         {% else %}
-                        {% if not organizacao.nuit == None %}
+                        {% if not endereco.localizacao.bairro.cidade == None %}
                         <div class="row justify-content-center">
                             <div class="col-sm-6">
                                 <span class="d-inline-block text-truncate font-weight-bold m float-right "
                                       style="max-width: 150px;">
-                                  NUIT:
+                                  Cidade:
                                 </span>
                             </div>
                             <div class="col-sm-6">
-                                <p class="font-weight-normal">{{ organizacao.nuit }}</p>
+                                <p class="font-weight-normal">{{ endereco.localizacao.bairro.cidade }}</p>
                             </div>
                         </div>
                         {% endif %}
 
-                        {% if not organizacao.nome == None %}
+                        {% if not endereco.localizacao.bairro == None %}
                         <div class="row justify-content-center">
                             <div class="col-sm-6">
                                 <span class="d-inline-block text-truncate font-weight-bold m float-right "
                                       style="max-width: 150px;">
-                                  Nome:
+                                  Bairro:
                                 </span>
                             </div>
                             <div class="col-sm-6">
-                                <p class="font-weight-normal">{{ organizacao.nome }}</p>
+                                <p class="font-weight-normal">{{ endereco.localizacao.bairro }}</p>
                             </div>
                         </div>
                         {% endif %}
 
-                        {% if not organizacao.abreviatura == '' %}
+                        {% if not endereco.localizacao.nome_edificio == '' %}
                         <div class="row justify-content-center">
                             <div class="col-sm-6">
                                 <span class="d-inline-block text-truncate font-weight-bold m float-right "
                                       style="max-width: 150px;">
-                                  Abreviatura:
+                                  Nome do Edificio:
                                 </span>
                             </div>
                             <div class="col-sm-6">
-                                <p class="font-weight-normal">{{ organizacao.abreviatura }}</p>
+                                <p class="font-weight-normal">{{ endereco.localizacao.nome_edificio }}</p>
                             </div>
                         </div>
                         {% endif %}
 
-                        {% if not organizacao.descricao == '' %}
+                        {% if not endereco.localizacao.rua_avenida == None %}
                         <div class="row justify-content-center">
                             <div class="col-sm-6">
                                 <span class="d-inline-block text-truncate font-weight-bold m float-right "
                                       style="max-width: 150px;">
-                                  Descricao:
+                                  Avenida/Rua:
                                 </span>
                             </div>
                             <div class="col-sm-6">
-                                <p class="font-weight-normal">{{ organizacao.descricao }}</p>
+                                <p class="font-weight-normal">{{ endereco.localizacao.rua_avenida }}</p>
                             </div>
                         </div>
                         {% endif %}
 
-                        {% if not organizacao.tipo_organizacao == None %}
+                        {% if not endereco.localizacao.numero_edificio == '' %}
                         <div class="row justify-content-center">
                             <div class="col-sm-6">
                                 <span class="d-inline-block text-truncate font-weight-bold m float-right "
                                       style="max-width: 150px;">
-                                  Tipo de Organizacao:
+                                  Numero do Edificio:
                                 </span>
                             </div>
                             <div class="col-sm-6">
-                                <p class="font-weight-normal">{{ organizacao.tipo_organizacao }}</p>
+                                <p class="font-weight-normal">{{ endereco.localizacao.numero_edificio }}</p>
                             </div>
                         </div>
                         {% endif %}
 
-                        {% if not organizacao.data_constituicao == None %}
+                        {% if not endereco.localizacao.quarteirao == '' %}
                         <div class="row justify-content-center">
                             <div class="col-sm-6">
                                 <span class="d-inline-block text-truncate font-weight-bold m float-right "
                                       style="max-width: 150px;">
-                                  Data da Constituicao:
+                                  Quarteirao:
                                 </span>
                             </div>
                             <div class="col-sm-6">
-                                <p class="font-weight-normal">{{ organizacao.data_constituicao|date:"M d, Y"  }}</p>
+                                <p class="font-weight-normal">{{ endereco.localizacao.quarteirao }}</p>
                             </div>
                         </div>
                         {% endif %}
 
-                        {% if not organizacao.data_publicacao == None %}
+                        {% if not endereco.numero_casa == None %}
                         <div class="row justify-content-center">
                             <div class="col-sm-6">
                                 <span class="d-inline-block text-truncate font-weight-bold m float-right "
                                       style="max-width: 150px;">
-                                  Data da Publicacao:
+                                  Numero da Casa:
                                 </span>
                             </div>
                             <div class="col-sm-6">
-                                <p class="font-weight-normal">{{ organizacao.data_publicacao|date:"M d, Y"  }}</p>
+                                <p class="font-weight-normal">{{ endereco.numero_casa }}</p>
                             </div>
                         </div>
                         {% endif %}
 
-                        {% if not organizacao.numero_br == '' %}
+                        {% if not endereco.andar == '' %}
                         <div class="row justify-content-center">
                             <div class="col-sm-6">
                                 <span class="d-inline-block text-truncate font-weight-bold m float-right "
                                       style="max-width: 150px;">
-                                  Numero do BR:
+                                  Andar:
                                 </span>
                             </div>
                             <div class="col-sm-6">
-                                <p class="font-weight-normal">{{ organizacao.numero_br }}</p>
+                                <p class="font-weight-normal">{{ endereco.andar }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if not endereco.flat == '' %}
+                        <div class="row justify-content-center">
+                            <div class="col-sm-6">
+                                <span class="d-inline-block text-truncate font-weight-bold m float-right "
+                                      style="max-width: 150px;">
+                                  Flat:
+                                </span>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="font-weight-normal">{{ endereco.flat }}</p>
                             </div>
                         </div>
                         {% endif %}
 
                         <div class="row justify-content-center">
-                            <a href="{% url 'org_edit' organizacao.id  %}" class="nav-link btn btn-info float-right">
+                            <a href="{% url 'org_address_edit' endereco.id  %}" class="nav-link btn btn-info float-right">
                                                     <span class="pcoded-micon">
                                                         <i class="feather icon-edit"></i></span>
                                 <span class="pcoded-mtext">Editar</span>
@@ -187,7 +202,7 @@
 <!--                            </a>-->
                         </div>
 
-                        {% endif %}
+{% endif %}
                     </div>
                 </div>
             </div>
