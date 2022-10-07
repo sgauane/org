@@ -1,4 +1,4 @@
-from apps.reg.models import Organizacao, Endereco
+from apps.reg.models import Organizacao, Endereco, Imagem
 
 
 class UtilDao:
@@ -43,6 +43,18 @@ class UtilDao:
             print(endereco)
             print('Address ok.')
             return endereco
+        except Exception as e:
+            print('Ops bug, Entrou no exception', str(e))
+        return None
+
+
+    def getImagem(self, id):
+        try:
+            print('Entrou no try')
+            img = Imagem.objects.get(pk=id)
+            print(img)
+            print('Address ok.')
+            return img
         except Exception as e:
             print('Ops bug, Entrou no exception', str(e))
         return None

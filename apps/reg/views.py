@@ -6,7 +6,7 @@ from psycopg2 import Date
 
 from apps.reg.UtilDao import UtilDao
 from apps.reg.forms import OrganizacaoForm, EnderecoForm, ImagemForm
-from apps.reg.models import Localizacao, Endereco, Organizacao
+from apps.reg.models import Localizacao, Endereco, Organizacao, Imagem
 
 
 # Create your views here.
@@ -260,6 +260,7 @@ def imagem_registar(request):
     data = {}
     success = False
     skip = None
+    user = request.user
 
     if request.method == "POST":
         form = ImagemForm(request.POST, request.FILES)
@@ -268,7 +269,6 @@ def imagem_registar(request):
         if form.is_valid():
             print('Its Valid')
 
-            user = request.user
             org = Organizacao.objects.get(admin_user=user.id)
             print(org)
 
@@ -282,14 +282,16 @@ def imagem_registar(request):
                 print("saved.")
                 return redirect("perfil")
             except Exception as e:
-                print(e)
+                print('error >>>',e)
                 # transaction.savepoint_rollback(sid)
                 transaction.rollback()
 
         print('Its Not Valid')
 
     else:
-        form = ImagemForm()
+        imagemInstance = Imagem()
+        imagemInstance.usuario_criacao = user
+        form = ImagemForm(instance=imagemInstance)
         skip = "Pular"
 
     data["form"] = form
@@ -298,3 +300,50 @@ def imagem_registar(request):
     return render(request,'reg/imagem/form.html', data)
 
 
+def imagem_show(request, id):
+    dao = UtilDao()
+    context = {}
+
+    imagem = dao.getImagem(id)
+
+    context["imagem"] = imagem
+
+    return render(request, "reg/imagem/show.html", context)
+
+
+def imagem_editar(request, id):
+    data = {}
+    success = False
+    dao = UtilDao()
+
+    img = dao.getImagem(id)
+
+    if request.method == "POST":
+        form = ImagemForm(request.POST, request.FILES, instance=img)
+        print('Its POST')
+        print(form.errors)
+        if form.is_valid():
+            print('Its Valid')
+
+            try:
+                with transaction.atomic():
+                    avatar = form.save()
+                    success = True
+
+                print("saved.")
+                return redirect("perfil")
+            except Exception as e:
+                print('error >>>', e)
+                # transaction.savepoint_rollback(sid)
+                transaction.rollback()
+
+        print('Its Not Valid')
+
+    else:
+        form = ImagemForm(instance=img)
+        skip = "Pular"
+
+    data["form"] = form
+    data["success"] = success
+    data["skip"] = skip
+    return render(request, 'reg/imagem/form.html', data)

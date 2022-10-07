@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils import timezone
 from django_countries.fields import CountryField
 #from pkg_resources import _
 
@@ -10,6 +11,7 @@ class ModeloBase(models.Model):
     activo = models.BooleanField(default=True)
     data_criacao = models.DateField(auto_now_add=True)
     data_actualizacao = models.DateField(auto_created=True, null=True, blank=True)
+    usuario_criacao = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
 
     class Meta:
@@ -95,9 +97,14 @@ def user_directory_path(instance, ficheiro):
     return 'imagens/user_{0}/{1}'.format(instance.user.id, ficheiro)
 
 
+def get_upload_path(instance, filename):
+    print('instance:',instance.usuario_criacao, 'Filename:', filename)
+    return 'imagens/avatar/usuario_{0}/{1}'.format(instance.usuario_criacao.username, filename)
+
+
 class Imagem(ModeloBase):
     descricao = models.CharField(max_length=255, blank=True, null=True)
-    ficheiro = models.ImageField(upload_to='imagens')
+    ficheiro = models.ImageField(upload_to=get_upload_path, null=True)
 
     class Meta:
         verbose_name = "Foto"
@@ -110,7 +117,7 @@ class Imagem(ModeloBase):
 class Entidade(ModeloBase):
     nuit =models.CharField(max_length=9, null= True, blank=True)
     nome = models.CharField(max_length=500)
-    foto = models.OneToOneField(Imagem, on_delete=models.CASCADE, blank=True, null=True)
+    foto = models.OneToOneField(Imagem, on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
         return self.nome
@@ -161,5 +168,49 @@ class Endereco(ModeloBase):
 
     def __str__(self):
         return self.numero_casa
+
+
+class TipoContrato(ModeloBase):
+    designacao = models.CharField(max_length=255, null=True)
+
+    class Meta:
+        verbose_name = 'tipo de contrato'
+        verbose_name_plural = 'tipos de contrato'
+
+    def __str__(self):
+        return self.designacao
+
+class ModificadoresContrato(ModeloBase):
+    designacao = models.CharField(max_length=255, null=True)
+
+    class Meta:
+        verbose_name = 'modificador de contrato'
+        verbose_name_plural = ('modificadores de contrato')
+
+    def __str__(self):
+        return self.designacao
+
+class Contrato(ModeloBase):
+    numero = models.CharField(max_length=25)
+    contratante = models.ForeignKey(Organizacao, on_delete=models.CASCADE, null=True)
+    tipo_contrato = models.ForeignKey(TipoContrato, on_delete=models.CASCADE, null=True)
+    data_inicio_contrato = models.DateField(default=timezone.now)
+    data_assinatura = models.DateField(default=timezone.now)
+    estado = models.BooleanField(default=True)  # Activo ou Inactivo
+
+    def __str__(self):
+        return self.numero
+
+
+class PrazoContrato(ModeloBase):
+    contrato = models.ForeignKey(Contrato, on_delete=models.CASCADE, null=True)
+    modificador = models.ForeignKey(ModificadoresContrato, on_delete=models.CASCADE, null=True)
+    data_termino = models.DateField(null=False, blank=False, default=timezone.now)
+    data_inicio = models.DateField(default=timezone.now)
+    data_fim = models.DateField(null=True, blank=True)
+
+
+class Membro(Contrato):
+    contratado = models.ForeignKey(Pessoa, on_delete=models.CASCADE)
 
 

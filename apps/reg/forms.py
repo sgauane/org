@@ -1,39 +1,25 @@
 from PIL import Image
 from django import forms
 
-from apps.reg.models import Imagem, TipoDocumento, Organizacao, TipoOrganizacao, Cidade, Bairro
+from apps.reg.models import Imagem, TipoDocumento, Organizacao, TipoOrganizacao, Cidade, Bairro, Pessoa
 
 
 class ImagemForm(forms.ModelForm):
-    ficheiro = forms.ImageField(
-        widget=forms.FileInput(
-        attrs={
-            "class": "form-control"
-        }
-    ))
-    x = forms.FloatField(widget=forms.HiddenInput())
-    y = forms.FloatField(widget=forms.HiddenInput())
-    width = forms.FloatField(widget=forms.HiddenInput())
-    height = forms.FloatField(widget=forms.HiddenInput())
+    # ficheiro = forms.ImageField(
+    #     widget=forms.FileInput(
+    #     attrs={
+    #         "class": "form-control"
+    #     }
+    # ))
+    # x = forms.FloatField(widget=forms.HiddenInput())
+    # y = forms.FloatField(widget=forms.HiddenInput())
+    # width = forms.FloatField(widget=forms.HiddenInput())
+    # height = forms.FloatField(widget=forms.HiddenInput())
 
     class Meta:
         model = Imagem
-        fields = ('ficheiro', 'x', 'y', 'width', 'height',)
-
-    def save(self):
-        photo = super(ImagemForm, self).save()
-
-        x = self.cleaned_data.get('x')
-        y = self.cleaned_data.get('y')
-        w = self.cleaned_data.get('width')
-        h = self.cleaned_data.get('height')
-
-        image = Image.open(photo.file)
-        cropped_image = image.crop((x, y, w + x, h + y))
-        resized_image = cropped_image.resize((200, 200), Image.ANTIALIAS)
-        resized_image.save(photo.file.path)
-
-        return photo
+        fields = ('ficheiro', 'usuario_criacao')
+        # fields = ('ficheiro', 'x', 'y', 'width', 'height',)
 
 
 class OrganizacaoForm(forms.ModelForm):
@@ -219,3 +205,20 @@ class EnderecoForm(forms.Form):
     #             pass
     #     else:
     #         print(*args)
+
+
+class PessoaForm(forms.ModelForm):
+    model = Pessoa
+    fields = ['nacionalidade']
+
+class MembroForm(forms.Form):
+    numero = forms.CharField(
+
+        widget=forms.TextInput(
+            attrs={
+                "placeolder": "Numero",
+                "class": "form-control",
+
+            }
+        )
+    )
