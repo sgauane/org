@@ -1,7 +1,10 @@
 from PIL import Image
 from django import forms
+from django_countries.fields import CountryField
+from django_countries.widgets import CountrySelectWidget
 
-from apps.reg.models import Imagem, TipoDocumento, Organizacao, TipoOrganizacao, Cidade, Bairro, Pessoa
+from apps.reg.models import Imagem, TipoDocumento, Organizacao, TipoOrganizacao, Cidade, Bairro, Pessoa, Membro, \
+    TipoContrato
 
 
 class ImagemForm(forms.ModelForm):
@@ -35,24 +38,24 @@ class OrganizacaoForm(forms.ModelForm):
     )
     nuit = forms.CharField(
         max_length=9,
-            widget=forms.TextInput(
-                attrs={
-                    "placeolder": "Nuit",
-                    "class": "form-control",
-                    "type": "number",
-                    "max_lenth": "9"
-                }
-            )
+        widget=forms.TextInput(
+            attrs={
+                "placeolder": "Nuit",
+                "class": "form-control",
+                "type": "number",
+                "max_lenth": "9"
+            }
         )
+    )
     abreviatura = forms.CharField(
-                widget=forms.TextInput(
-                    attrs={
-                        "placeolder": "Abreviatura",
-                        "class": "form-control"
-                    }
-                ),
-                required=False
-            )
+        widget=forms.TextInput(
+            attrs={
+                "placeolder": "Abreviatura",
+                "class": "form-control"
+            }
+        ),
+        required=False
+    )
     descricao = forms.CharField(
         widget=forms.TextInput(
             attrs={
@@ -60,7 +63,7 @@ class OrganizacaoForm(forms.ModelForm):
                 "class": "form-control"
             }
         ),
-                required=False
+        required=False
     )
     tipo_organizacao = forms.ModelChoiceField(
         queryset=TipoOrganizacao.objects.all(),
@@ -79,7 +82,7 @@ class OrganizacaoForm(forms.ModelForm):
                 "type": "date"
             }
         ),
-                required=False
+        required=False
     )
     data_publicacao = forms.DateField(
         widget=forms.DateInput(
@@ -89,7 +92,7 @@ class OrganizacaoForm(forms.ModelForm):
                 "type": "date"
             }
         ),
-                required=False
+        required=False
     )
     numero_br = forms.CharField(
         widget=forms.TextInput(
@@ -98,7 +101,7 @@ class OrganizacaoForm(forms.ModelForm):
                 "class": "form-control"
             }
         ),
-                required=False
+        required=False
     )
 
     class Meta:
@@ -187,38 +190,143 @@ class EnderecoForm(forms.Form):
         )
     )
 
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     self.fields['bairro'].queryset = Bairro.objects.none()
-    #     print('xxxxxxxxxxxxxxxxxxxxxxxxx',self.data)
-    #
-    #     if 'cidade' in self.data:
-    #         print('---------------------------')
-    #         try:
-    #             print('xxxxxxxxxxxxxxxxxxxxxxxxx')
-    #             cidade_id = int(self.data.get('cidade'))
-    #             print(">>>>>>>>>>>>>>>>>>>", cidade_id)
-    #             self.fields['bairro'].queryset = Bairro.objects.filter(
-    #                 cidade_id=cidade_id
-    #             )
-    #         except (ValueError, TypeError):
-    #             pass
-    #     else:
-    #         print(*args)
-
 
 class PessoaForm(forms.ModelForm):
-    model = Pessoa
-    fields = ['nacionalidade']
-
-class MembroForm(forms.Form):
-    numero = forms.CharField(
+    nome = forms.CharField(
 
         widget=forms.TextInput(
             attrs={
-                "placeolder": "Numero",
+                "placeolder": "Nome",
                 "class": "form-control",
 
             }
         )
     )
+    nuit = forms.CharField(
+        max_length=9,
+        widget=forms.TextInput(
+            attrs={
+                "placeolder": "Nuit",
+                "class": "form-control",
+                "type": "number",
+                "max_lenth": "9"
+            }
+        )
+    )
+    apelido = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeolder": "Apelido",
+                "class": "form-control"
+            }
+        ),
+        required=False
+    )
+    genero = forms.ChoiceField(
+        choices=Pessoa.generos,
+        widget=forms.Select(
+            attrs={
+                "placeolder": "Generos",
+                "class": "form-control"
+            }
+        )
+    )
+    data_nascimento = forms.DateField(
+        widget=forms.DateInput(
+            attrs={
+                "placeolder": "Data de Nascimento",
+                "class": "form-control",
+                "type": "date"
+            }
+        ),
+
+    )
+    numero_documento = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeolder": "Numero do Documento",
+                "class": "form-control"
+            }
+        ),
+    )
+    tipo_documento = forms.ModelChoiceField(
+        queryset=TipoDocumento.objects.all(),
+        widget=forms.Select(
+            attrs={
+                "placeolder": "Tipo de Documento",
+                "class": "form-control"
+            }
+        )
+    )
+    nacionalidade = CountryField()
+
+    class Meta:
+        model = Pessoa
+        fields = ['nuit','nome', 'apelido','nacionalidade','genero','data_nascimento', 'tipo_documento', 'numero_documento']
+        widgets = {'nacionalidade': CountrySelectWidget(
+            attrs={
+                "placeolder": "Tipo de Organizacao",
+                "class": "form-control"
+            },
+
+        )}
+
+
+class MembroForm(forms.ModelForm):
+
+    contratado = forms.ModelChoiceField(
+        queryset=Pessoa.objects.all(),
+        widget=forms.Select(
+            attrs={
+                "placeolder": "Nome",
+                "class": "form-control"
+            }
+        )
+    )
+
+    data_inicio_contrato = forms.DateField(
+        widget=forms.DateInput(
+            attrs={
+                "placeolder": "Data de Inicio",
+                "class": "form-control",
+                "type": "date"
+            }
+        ),
+
+    )
+    data_termino = forms.DateField(
+        widget=forms.DateInput(
+            attrs={
+                "placeolder": "Data de Termino",
+                "class": "form-control",
+                "type": "date"
+            }
+        ),
+
+    )
+    data_assinatura = forms.DateField(
+        widget=forms.DateInput(
+            attrs={
+                "placeolder": "Data da Assinatura",
+                "class": "form-control",
+                "type": "date"
+            }
+        ),
+
+    )
+
+    tipo_contrato = forms.ModelChoiceField(
+        queryset=TipoContrato.objects.all(),
+        widget=forms.Select(
+            attrs={
+                "placeolder": "Tipo de Contrato",
+                "class": "form-control"
+            }
+        )
+    )
+
+    class Meta:
+        model = Membro
+        fields = ['contratado', 'tipo_contrato','data_inicio_contrato','data_termino', 'data_assinatura']
+
+

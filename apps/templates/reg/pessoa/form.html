@@ -6,8 +6,6 @@
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
-
-{% load static %}
 <section class="pcoded-content ">
     <div class="pcoded-inner-content">
 
@@ -23,7 +21,7 @@
                             <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
                             <li class="breadcrumb-item"><a href="javascript:">Organizacao</a></li>
                             <li class="breadcrumb-item"><a href="javascript:">Endereco</a></li>
-                            <li class="breadcrumb-item"><a href="javascript:">Detalhes</a></li>
+                            <li class="breadcrumb-item"><a href="javascript:">Registar</a></li>
                         </ul>
                     </div>
                 </div>
@@ -33,43 +31,30 @@
         <!--  Conteudo -->
         <div class="main-body">
             <div class="page-wrapper">
-
-                <div class="row">
-                    <div class="col-sm-12">
-
-                        <div class="row">
-                            <nav class="navbar bg-light">
-                                <form class="container-fluid justify-content-start">
-                                    <button class="btn btn-outline-success me-2" type="button">Cotas</button>
-                                    <button class="btn btn-outline-success me-2" type="button">Cotas</button>
-                                    <button class="btn btn-outline-success me-2" type="button">Cotas</button>
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">Projectos</button>
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">Projectos</button>
-                                    <button class="btn btn-sm btn-outline-secondary" type="button">Projectos</button>
-                                </form>
-                            </nav>
+                <div class="container">
+                    <div class="row my-5">
+                        <div class="col-md-12">
+                            <form method="post" class="form" enctype="multipart/form-data" id="formUpload">
+                                {% csrf_token %}
+                                {{ form }}
+                                <br/>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <!--                                <a href="{% url 'org_address_register' %}">Skip</a>-->
+                            </form>
                         </div>
-
-                        <hr/>
-
-
                     </div>
                 </div>
+
+
             </div>
 
-            {% include '_details.html' %}
 
         </div>
 
     </div>
 
 </section>
-
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}
-
-
-{% endblock javascripts %}
-
+{% block javascripts %}{% endblock javascripts %}

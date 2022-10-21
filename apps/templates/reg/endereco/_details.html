@@ -1,0 +1,146 @@
+{% if endereco.id == None %}
+                        <div class="row justify-content-center">
+                            <p class="d-inline-block text-truncate font-weight-bold m float-right">
+                                Registo nao encontrado. Crie
+                                <a href="{% url 'org_address_register' %}">aqui</a>
+                            </p>
+
+                        </div>
+                        {% else %}
+                        {% if not endereco.localizacao.bairro.cidade == None %}
+                        <div class="row justify-content-center">
+                            <div class="col-sm-6">
+                                <span class="d-inline-block text-truncate font-weight-bold m float-right "
+                                      style="max-width: 150px;">
+                                  Cidade:
+                                </span>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="font-weight-normal">{{ endereco.localizacao.bairro.cidade }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if not endereco.localizacao.bairro == None %}
+                        <div class="row justify-content-center">
+                            <div class="col-sm-6">
+                                <span class="d-inline-block text-truncate font-weight-bold m float-right "
+                                      style="max-width: 150px;">
+                                  Bairro:
+                                </span>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="font-weight-normal">{{ endereco.localizacao.bairro }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if not endereco.localizacao.nome_edificio == '' %}
+                        <div class="row justify-content-center">
+                            <div class="col-sm-6">
+                                <span class="d-inline-block text-truncate font-weight-bold m float-right "
+                                      style="max-width: 150px;">
+                                  Nome do Edificio:
+                                </span>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="font-weight-normal">{{ endereco.localizacao.nome_edificio }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if not endereco.localizacao.rua_avenida == None %}
+                        <div class="row justify-content-center">
+                            <div class="col-sm-6">
+                                <span class="d-inline-block text-truncate font-weight-bold m float-right "
+                                      style="max-width: 150px;">
+                                  Avenida/Rua:
+                                </span>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="font-weight-normal">{{ endereco.localizacao.rua_avenida }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if not endereco.localizacao.numero_edificio == '' %}
+                        <div class="row justify-content-center">
+                            <div class="col-sm-6">
+                                <span class="d-inline-block text-truncate font-weight-bold m float-right "
+                                      style="max-width: 150px;">
+                                  Numero do Edificio:
+                                </span>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="font-weight-normal">{{ endereco.localizacao.numero_edificio }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if not endereco.localizacao.quarteirao == '' %}
+                        <div class="row justify-content-center">
+                            <div class="col-sm-6">
+                                <span class="d-inline-block text-truncate font-weight-bold m float-right "
+                                      style="max-width: 150px;">
+                                  Quarteirao:
+                                </span>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="font-weight-normal">{{ endereco.localizacao.quarteirao }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if not endereco.numero_casa == None %}
+                        <div class="row justify-content-center">
+                            <div class="col-sm-6">
+                                <span class="d-inline-block text-truncate font-weight-bold m float-right "
+                                      style="max-width: 150px;">
+                                  Numero da Casa:
+                                </span>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="font-weight-normal">{{ endereco.numero_casa }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if not endereco.andar == '' %}
+                        <div class="row justify-content-center">
+                            <div class="col-sm-6">
+                                <span class="d-inline-block text-truncate font-weight-bold m float-right "
+                                      style="max-width: 150px;">
+                                  Andar:
+                                </span>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="font-weight-normal">{{ endereco.andar }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if not endereco.flat == '' %}
+                        <div class="row justify-content-center">
+                            <div class="col-sm-6">
+                                <span class="d-inline-block text-truncate font-weight-bold m float-right "
+                                      style="max-width: 150px;">
+                                  Flat:
+                                </span>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="font-weight-normal">{{ endereco.flat }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <div class="row justify-content-center">
+                            <a href="{% url 'org_address_edit' endereco.id  %}" class="nav-link btn btn-info float-right">
+                                                    <span class="pcoded-micon">
+                                                        <i class="feather icon-edit"></i></span>
+                                <span class="pcoded-mtext">Editar</span>
+                            </a>
+
+
+                        </div>
+
+{% endif %}

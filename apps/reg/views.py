@@ -5,11 +5,14 @@ from django.utils import timezone
 from psycopg2 import Date
 
 from apps.reg.UtilDao import UtilDao
-from apps.reg.forms import OrganizacaoForm, EnderecoForm, ImagemForm
+from apps.reg.UtilEmail import UtilEmail
+from apps.reg.forms import OrganizacaoForm, EnderecoForm, ImagemForm, PessoaForm, MembroForm
 from apps.reg.models import Localizacao, Endereco, Organizacao, Imagem
 
 
 # Create your views here.
+
+
 
 # ORGANIZACAO
 def org_register(request):
@@ -65,6 +68,30 @@ def org_edit(request, id):
     data["success"] = success
 
     return render(request, "reg/org/form.html", data)
+
+
+def perfil(request):
+    data = {}
+    dao = UtilDao()
+    mail = UtilEmail()
+
+    print("Teste de sessao request.session.org >>>> ", int(request.session.get("org")))
+
+    # Teste de envio de emai. SUcesso
+    # mail.send()
+
+    user = request.user
+    org = dao.getOrgByUser(user)
+    endereco = dao.getAddressByOrg(org)
+
+    data["organizacao"] = org
+    data["endereco"] = endereco
+    data["imagem"] = org.foto
+    data["orgId"] = org.id
+
+    page = "reg/perfil.html"
+
+    return render(request,page, data)
 
 
 def org_show(request):
@@ -347,3 +374,175 @@ def imagem_editar(request, id):
     data["success"] = success
     data["skip"] = skip
     return render(request, 'reg/imagem/form.html', data)
+
+
+#Pessoa
+def pessoa_registar(request):
+    data = {}
+    success = False
+
+    if request.method == "POST":
+        form = PessoaForm(request.POST)
+
+        if form.is_valid():
+            p = form.save()
+            success = True
+
+            return redirect("pessoa_detalhes", id=p.id)
+
+    else:
+        form = PessoaForm(request.POST or None)
+
+    data["form"] = form
+    data["success"] = success
+
+    return render(request, "reg/pessoa/form.html", data)
+
+
+def pessoa_show(request, id):
+    dao = UtilDao()
+    context = {}
+
+    pessoa = dao.getPessoa(id)
+
+    context["pessoa"] = pessoa
+
+    return render(request, "reg/pessoa/show.html", context)
+
+
+def pessoa_registar(request):
+    data = {}
+    success = False
+
+    if request.method == "POST":
+        form = PessoaForm(request.POST)
+
+        if form.is_valid():
+            p = form.save()
+            success = True
+
+            return redirect("pessoa_detalhes", id=p.id)
+
+    else:
+        form = PessoaForm(request.POST or None)
+
+    data["form"] = form
+    data["success"] = success
+
+    return render(request, "reg/pessoa/form.html", data)
+
+
+def pessoa_editar(request, id):
+    data = {}
+    success = False
+    dao = UtilDao()
+
+    p = dao.getPessoa(id)
+
+    if request.method == "POST":
+        form = PessoaForm(request.POST, instance=p)
+        print('Its POST')
+        print(form.errors)
+        if form.is_valid():
+            form.save()
+            print(p.id)
+            return redirect("pessoa_detalhes", id=p.id)
+
+
+        print('Its Not Valid')
+
+    else:
+        form = PessoaForm(instance=p)
+        skip = "Pular"
+
+    data["form"] = form
+    data["success"] = success
+    data["skip"] = skip
+    return render(request, 'reg/pessoa/form.html', data)
+
+
+#Membro
+def membro_list(request):
+    dao = UtilDao()
+    context = {}
+
+    orgId = request.session.get("org")
+
+    membros = dao.findAllMembrosByOrg(orgId)
+
+    context["membros"] = membros
+    context["orgId"] = orgId
+
+    return render(request, "reg/membro/list.html", context)
+
+
+def membro_registar(request, orgId):
+    data = {}
+    success = False
+    dao = UtilDao()
+    user = request.user
+
+    org = dao.getOrg(orgId)
+    mc = dao.getModificadorContrato(1) #Inicial
+
+    if request.method == "POST":
+        form = MembroForm(request.POST)
+
+        if form.is_valid():
+            obj = form.save(commit=False)
+
+            obj.contratante = org
+            obj.modificador = mc
+            obj.usuario_criacao = user
+
+            obj = form.save()
+            success = True
+
+            return redirect("membro_detalhes", id=obj.id)
+
+    else:
+        form = MembroForm(request.POST or None)
+
+    data["form"] = form
+    data["success"] = success
+
+    return render(request, "reg/membro/form.html", data)
+
+
+def membro_show(request, id):
+    dao = UtilDao()
+    context = {}
+
+    pessoa = dao.getMembro(id)
+
+    context["instance"] = pessoa
+
+    return render(request, "reg/membro/show.html", context)
+
+
+def membro_editar(request, id):
+    data = {}
+    success = False
+    dao = UtilDao()
+
+    obj = dao.getMembro(id)
+
+    if request.method == "POST":
+        form = MembroForm(request.POST, instance=obj)
+        print('Its POST')
+        print(form.errors)
+        if form.is_valid():
+            form.save()
+            return redirect("membro_detalhes", id=obj.id)
+
+
+        print('Its Not Valid')
+
+    else:
+        form = MembroForm(instance=obj)
+        skip = "Pular"
+
+    data["form"] = form
+    data["success"] = success
+    data["skip"] = skip
+    return render(request, 'reg/membro/form.html', data)

@@ -124,12 +124,15 @@ class Entidade(ModeloBase):
 
 
 class Pessoa(Entidade):
+    generos = [('M', 'Masculino'), ('F', 'Feminino')]
+
     apelido = models.CharField(max_length=255, null=True, blank=True)
     nacionalidade = CountryField()
-    genero = models.CharField(max_length=1, choices=[('M', 'Masculino'), ('F', 'Feminino')])
+    genero = models.CharField(max_length=1, choices=generos)
     data_nascimento = models.DateField()
-    tipo_documento = models.ForeignKey(TipoDocumento, on_delete=models.CASCADE)
+    tipo_documento = models.ForeignKey(TipoDocumento,null=True, on_delete=models.SET_NULL)
     numero_documento = models.CharField(max_length=25)
+
 
     class Meta:
         verbose_name = "Pessoa"
@@ -190,18 +193,21 @@ class ModificadoresContrato(ModeloBase):
     def __str__(self):
         return self.designacao
 
+
 class Contrato(ModeloBase):
     numero = models.CharField(max_length=25)
     contratante = models.ForeignKey(Organizacao, on_delete=models.CASCADE, null=True)
     tipo_contrato = models.ForeignKey(TipoContrato, on_delete=models.CASCADE, null=True)
     data_inicio_contrato = models.DateField(default=timezone.now)
     data_assinatura = models.DateField(default=timezone.now)
-    estado = models.BooleanField(default=True)  # Activo ou Inactivo
+    modificador = models.ForeignKey(ModificadoresContrato, on_delete=models.CASCADE, null=True)
+    data_termino = models.DateField(null=False, blank=False, default=timezone.now)
 
     def __str__(self):
         return self.numero
 
 
+#No use 1110/2022
 class PrazoContrato(ModeloBase):
     contrato = models.ForeignKey(Contrato, on_delete=models.CASCADE, null=True)
     modificador = models.ForeignKey(ModificadoresContrato, on_delete=models.CASCADE, null=True)
@@ -212,5 +218,9 @@ class PrazoContrato(ModeloBase):
 
 class Membro(Contrato):
     contratado = models.ForeignKey(Pessoa, on_delete=models.CASCADE)
+
+
+class Cargo(ModeloBase):
+    designacao = models.CharField(max_length=255)
 
 

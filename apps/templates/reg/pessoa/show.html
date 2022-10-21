@@ -1,0 +1,192 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Perfil {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<section class="pcoded-content ">
+    <div class="pcoded-inner-content">
+
+        <!--  Cabecalho  -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">Organizacao</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="javascript:">Organizacao</a></li>
+                            <li class="breadcrumb-item"><a href="javascript:">Endereco</a></li>
+                            <li class="breadcrumb-item"><a href="javascript:">Detalhes</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--  Conteudo -->
+        <div class="main-body">
+            <div class="page-wrapper">
+
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div class="row">
+                            <nav class="navbar bg-light">
+                                <form class="container-fluid justify-content-start">
+                                    <button class="btn btn-outline-success me-2" type="button">Cotas</button>
+                                    <button class="btn btn-outline-success me-2" type="button">Cotas</button>
+                                    <button class="btn btn-outline-success me-2" type="button">Cotas</button>
+                                    <button class="btn btn-sm btn-outline-secondary" type="button">Projectos</button>
+                                    <button class="btn btn-sm btn-outline-secondary" type="button">Projectos</button>
+                                    <button class="btn btn-sm btn-outline-secondary" type="button">Projectos</button>
+                                </form>
+                            </nav>
+                        </div>
+
+                        <hr/>
+
+                        {% if pessoa.id == None %}
+                        <div class="row justify-content-center">
+                            <p class="d-inline-block text-truncate font-weight-bold m float-right">
+                                Registo nao encontrado. Crie
+                                <a href="{% url 'org_address_register' %}">aqui</a>
+                            </p>
+
+                        </div>
+                        {% else %}
+
+                        {% if pessoa.nuit %}
+                        <div class="row justify-content-center">
+                            <div class="col-sm-6">
+                                <span class="d-inline-block text-truncate font-weight-bold m float-right "
+                                      style="max-width: 150px;">
+                                  Nuit:
+                                </span>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="font-weight-normal">{{ pessoa.nuit }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+
+
+                        {% if pessoa.nome %}
+                        <div class="row justify-content-center">
+                            <div class="col-sm-6">
+                                <span class="d-inline-block text-truncate font-weight-bold m float-right "
+                                      style="max-width: 150px;">
+                                  Nome:
+                                </span>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="font-weight-normal">{{ pessoa.nome }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if pessoa.apelido %}
+                        <div class="row justify-content-center">
+                            <div class="col-sm-6">
+                                <span class="d-inline-block text-truncate font-weight-bold m float-right "
+                                      style="max-width: 150px;">
+                                  Apelido:
+                                </span>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="font-weight-normal">{{ pessoa.apelido }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if pessoa.genero %}
+                        <div class="row justify-content-center">
+                            <div class="col-sm-6">
+                                <span class="d-inline-block text-truncate font-weight-bold m float-right "
+                                      style="max-width: 150px;">
+                                  Genero:
+                                </span>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="font-weight-normal">{{ pessoa.genero }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if pessoa.data_nascimento %}
+                        <div class="row justify-content-center">
+                            <div class="col-sm-6">
+                                <span class="d-inline-block text-truncate font-weight-bold m float-right "
+                                      style="max-width: 150px;">
+                                  Data de Nascimento:
+                                </span>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="font-weight-normal">{{ pessoa.data_nascimento }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if pessoa.tipo_documento %}
+                        <div class="row justify-content-center">
+                            <div class="col-sm-6">
+                                <span class="d-inline-block text-truncate font-weight-bold m float-right "
+                                      style="max-width: 150px;">
+                                  Tipo de Documento:
+                                </span>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="font-weight-normal">{{ pessoa.tipo_documento }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if pessoa.numero_documento %}
+                        <div class="row justify-content-center">
+                            <div class="col-sm-6">
+                                <span class="d-inline-block text-truncate font-weight-bold m float-right "
+                                      style="max-width: 250px;">
+                                  Numero do Documento:
+                                </span>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="font-weight-normal">{{ pessoa.numero_documento }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <br/><br/>
+                        <div class="row justify-content-center">
+                            <a href="{% url 'pessoa_edit' pessoa.id  %}" class="nav-link btn btn-info float-right">
+                                                    <span class="pcoded-micon">
+                                                        <i class="feather icon-edit"></i></span>
+                                <span class="pcoded-mtext">Editar</span>
+                            </a>
+
+                        </div>
+
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+
+{% endblock javascripts %}
+

@@ -1,4 +1,4 @@
-from apps.reg.models import Organizacao, Endereco, Imagem
+from apps.reg.models import Organizacao, Endereco, Imagem, Pessoa, Membro, ModificadoresContrato
 
 
 class UtilDao:
@@ -31,7 +31,7 @@ class UtilDao:
             endereco = Endereco.objects.filter(entidade=org.id, data_fim=None)
             print(endereco)
             print('Address ok.')
-            return endereco
+            return endereco[0]
         except Exception as e:
             print('Ops bug, Entrou no exception', str(e))
         return None
@@ -58,4 +58,53 @@ class UtilDao:
         except Exception as e:
             print('Ops bug, Entrou no exception', str(e))
         return None
+
+
+    def getPessoa(self, id):
+        try:
+            print('Entrou no try')
+            obj = Pessoa.objects.get(pk=id)
+            print(obj)
+            print('Object ok. -> ')
+            return obj
+        except Exception as e:
+            print('Ops bug, Entrou no exception', str(e))
+        return None
+
+
+    def findAllMembrosByOrg(self, orgId):
+        try:
+            print('Entrou no try')
+            lista = Membro.objects.filter(contratante=orgId)
+            print(lista)
+            print('Object ok. -> ')
+            return lista
+        except Exception as e:
+            print('Ops bug, Entrou no exception', str(e))
+        return None
+
+
+    def getModificadorContrato(self, id):
+        try:
+            print('Entrou no try')
+            obj = ModificadoresContrato.objects.get(pk=id)
+            print(obj)
+            print('Object ok. -> ')
+            return obj
+        except Exception as e:
+            print('Ops bug, Entrou no exception', str(e))
+        return None
+
+
+    def getMembro(self, id):
+        try:
+            print('Entrou no try')
+            obj = Membro.objects.get(pk=id)
+            print(obj)
+            print('Object ok. -> ')
+            return obj
+        except Exception as e:
+            print('Ops bug, Entrou no exception', str(e))
+        return None
+
 

@@ -51,50 +51,7 @@
 
                         <hr/>
 
-                        {% if imagem.id == None %}
-                        <div class="row justify-content-center">
-                            <p class="d-inline-block text-truncate font-weight-bold m float-right">
-                                Registo nao encontrado. Crie
-                                <a href="{% url 'org_address_register' %}">aqui</a>
-                            </p>
-
-                        </div>
-                        {% else %}
-                        <div class="row justify-content-center">
-                            <div class="col-sm-6">
-                                {% load static %}
-<!--                                <img src="{% static '/images/index.jpeg' %}"-->
-<!--                                    class="rounded mx-auto d-block">-->
-<!--                                <img src="{% static '/images/index.jpeg' %}" width="20px"-->
-<!--                                    class="rounded mx-auto d-block">-->
-                                <img src="{% static  imagem.ficheiro.url %}" width="500px"
-                                    class="rounded mx-auto d-block">
-                            </div>
-                        </div>
-
-<!--                        <div class="row justify-content-center">-->
-<!--                            <div class="col-sm-6">-->
-<!--                                <span class="d-inline-block text-truncate font-weight-bold m float-right "-->
-<!--                                      style="max-width: 150px;">-->
-<!--                                  Cidade:-->
-<!--                                </span>-->
-<!--                            </div>-->
-<!--                            <div class="col-sm-6">-->
-<!--                                <p class="font-weight-normal">{{ imagem.ficheiro.url }}</p>-->
-<!--                            </div>-->
-<!--                        </div>-->
-
-                        <br/><br/>
-                        <div class="row justify-content-center">
-                            <a href="{% url 'imagem_edit' imagem.id  %}" class="nav-link btn btn-info float-right">
-                                                    <span class="pcoded-micon">
-                                                        <i class="feather icon-edit"></i></span>
-                                <span class="pcoded-mtext">Editar</span>
-                            </a>
-
-                        </div>
-
-                        {% endif %}
+                        {% include '_details.html' %}
                     </div>
                 </div>
             </div>

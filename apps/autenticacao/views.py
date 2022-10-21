@@ -7,6 +7,7 @@ from django.shortcuts import render, redirect
 from apps.autenticacao.forms import LoginForm, SignUpForm
 from apps.autenticacao.models import Token
 from apps.autenticacao.token import genToken, saveToken
+from apps.reg.UtilDao import UtilDao
 from core.util import send_email
 
 
@@ -31,6 +32,11 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 print("Loggedin as >>>", user)
+
+                dao = UtilDao()
+                org=dao.getOrgByUser(user)
+                request.session["org"] = org.id
+
                 return redirect('/dashboard/')
 
     data["form"] = form

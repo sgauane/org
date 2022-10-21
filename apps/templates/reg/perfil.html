@@ -1,0 +1,104 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Perfil {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<section class="pcoded-content ">
+    <div class="pcoded-inner-content">
+
+        <!--  Cabecalho  -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">Perfil</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="javascript:">Form Componants</a></li>
+                            <li class="breadcrumb-item"><a href="javascript:">Form Elements</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--  Conteudo -->
+        <div class="main-body">
+            <div class="page-wrapper">
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        {% csrf_token %}
+                        <div class="row">
+
+                            <div class="col-sm-6">
+                                <div class="card">
+
+                                    <div class="card-header">
+                                        <h5>Dados</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        {% include 'reg/imagem/_details.html' %}
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="card">
+
+                                    <div class="card-header">
+                                        <h5>Dados</h5>
+                                        <!--                                            <a href="{% url 'org_edit' organizacao.id %}" class="nav-link float-right">-->
+                                        <!--                                                <span class="pcoded-micon">-->
+                                        <!--                                                    <i class="feather icon-edit"></i></span>-->
+                                        <!--                                                <span class="pcoded-mtext">Edit</span>-->
+                                        <!--                                </a>-->
+                                    </div>
+                                    <div class="card-body">
+                                        {% include 'reg/org/_details.html' %}
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Dados</h5>
+                                        <!--                                            <a href="{% url 'org_edit' organizacao.id %}" class="nav-link float-right">-->
+                                        <!--                                                <span class="pcoded-micon">-->
+                                        <!--                                                    <i class="feather icon-edit"></i></span>-->
+                                        <!--                                                <span class="pcoded-mtext">Edit</span>-->
+                                        <!--                                </a>-->
+                                    </div>
+                                    <div class="card-body">
+                                        {% include 'reg/endereco/_details.html' %}
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
