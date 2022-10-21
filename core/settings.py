@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'apps.home',
     'apps.sitio',
     'apps.autenticacao',
+    'apps.projectos',
+    'apps.financas',
     'django_countries',
     'bootstrap5',
 ]
