@@ -1,0 +1,88 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Perfil {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<section class="pcoded-content ">
+    <div class="pcoded-inner-content">
+
+        <!--  Cabecalho  -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">Organizacao</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="javascript:">Organizacao</a></li>
+                            <li class="breadcrumb-item"><a href="javascript:">Endereco</a></li>
+                            <li class="breadcrumb-item"><a href="javascript:">Registar</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--  Conteudo -->
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="container">
+                    <div class="row my-5">
+                        <div class="col-md-12">
+                            <div class="card">
+                            <div class="card-header">
+                                <h5>Hover Table</h5>
+                                <span class="d-block m-t-5">use class <code>table-hover</code> inside table element</span>
+
+                                <a href="{% url 'valores_register' %}" class="primary nav-link float-right">
+                                                <span class="pcoded-micon">
+                                                    <i class="feather icon-edit"></i></span>
+                                    <span class="pcoded-mtext">Adicionar</span>
+                                </a>
+                            </div>
+                            <div class="card-block table-border-style">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Designacao</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for v in lista %}
+                                        <tr>
+                                            <th scope="row">{{ v.id }}</th>
+                                            <td>{{ v.designacao }}</td>
+                                            <td><a href="{% url 'valores_detalhes' v.id %}" class="nav-link float-right">detalhes</a></td>
+                                        </tr>
+                                        {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

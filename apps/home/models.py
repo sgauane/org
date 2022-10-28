@@ -10,22 +10,33 @@ from apps.reg.models import *
 
 
 # Create your models here.
-class Perguntas:
+class Perguntas(ModeloBase):
     nome = models.CharField(max_length=255)
     email = models.EmailField()
     titulo = models.CharField(max_length=255)
     mensagem = models.CharField(max_length=1000)
     resposta = models.CharField(max_length=1000)
+    favorito = models.BooleanField(default=False)
     # organizacao = models.ForeignKey(Organizacao, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = 'Pergunta'
+        verbose_name_plural = 'Perguntas'
+
+    def __str__(self):
+        return self.titulo
 
 
 class SobreNos(ModeloBase):
-    titulo = models.CharField(max_length=255)
-    titulo = models.CharField(max_length=255)
-    texto = models.CharField(max_length=1000)
-    organizacao = models.ForeignKey(Organizacao, on_delete=models.SET_NULL, null=True)
+    missao = models.CharField(max_length=255)
+    visao = models.CharField(max_length=255, null=True)
+    descricao = models.CharField(max_length=1000)
+    organizacao = models.OneToOneField(Organizacao, on_delete=models.SET_NULL, null=True)
 
 
+class Valores(ModeloBase):
+    organizacao = models.ForeignKey(Organizacao, on_delete=models.CASCADE)
+    designacao = models.CharField(max_length=255)
 
 
 class Equipa(Pessoa):

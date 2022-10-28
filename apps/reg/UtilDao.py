@@ -1,3 +1,4 @@
+from apps.home.models import Perguntas, SobreNos, Valores
 from apps.reg.models import Organizacao, Endereco, Imagem, Pessoa, Membro, ModificadoresContrato
 
 
@@ -106,5 +107,63 @@ class UtilDao:
         except Exception as e:
             print('Ops bug, Entrou no exception', str(e))
         return None
+
+
+    def findAllPerguntas(self):
+        try:
+            print('Entrou no try')
+            lista = Perguntas.objects.all()
+            print(lista)
+            print('Object ok. -> ')
+            return lista
+        except Exception as e:
+            print('Ops bug, Entrou no exception', str(e))
+        return None
+
+    def findAllPerguntasFrequentes(self):
+        try:
+            print('Entrou no try')
+            lista = Perguntas.objects.filter(activo=True, favorito=True)
+            print(lista)
+            print('Object ok. -> ')
+            return lista
+        except Exception as e:
+            print('Ops bug, Entrou no exception', str(e))
+        return None
+
+
+    def getSobreNosByOrg(self, orgId):
+        try:
+            print('Entrou no try')
+            obj = SobreNos.objects.get(organizacao=orgId)
+            print(obj)
+            print('Object ok. -> ')
+            return obj
+        except Exception as e:
+            print('Ops bug, Entrou no exception', str(e))
+        return None
+
+    def getValores(self, id):
+        try:
+            print('Entrou no try')
+            obj = Valores.objects.get(pk=id)
+            print(obj)
+            print('Object ok. -> ')
+            return obj
+        except Exception as e:
+            print('Ops bug, Entrou no exception', str(e))
+        return None
+
+    def findAllValoresByOrg(self, orgId):
+        try:
+            print('Entrou no try')
+            lista = Valores.objects.filter(organizacao=orgId)
+            print(lista)
+            print('Object ok. -> ')
+            return lista
+        except Exception as e:
+            print('Ops bug, Entrou no exception', str(e))
+        return None
+
 
 

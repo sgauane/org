@@ -1,4 +1,5 @@
 
+{% if request.user.is_authenticated %}
     <nav class="pcoded-navbar">
         <div class="navbar-wrapper">
             <div class="navbar-brand header-logo">
@@ -26,6 +27,33 @@
                                 <i class="feather icon-home"></i>
                             </span><span class="pcoded-mtext">Dashboard</span></a>
                     </li>
+
+                    <!--site-->
+                    <li class="nav-item pcoded-menu-caption">
+                        <label>Admin</label>
+                    </li>
+
+                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
+                        <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Site</span></a>
+                        <ul class="pcoded-submenu">
+                            <li data-username="Disabled Menu" class="nav-item">
+                                <!--valores-->
+                                <a href="{% url 'valores_list' %}" class="nav-link">
+                                    <span class="pcoded-micon"><i class="feather icon-person"></i></span><span class="pcoded-mtext">Valores</span>
+                                </a>
+                                <!--endvalores-->
+                                <!--sobrenos-->
+                                <a href="{% url 'sobrenos_detalhes' %}" class="nav-link">
+                                    <span class="pcoded-micon"><i class="feather icon-person"></i></span><span class="pcoded-mtext">Sobre Nos</span>
+                                </a>
+                                <!--endsobrenos-->
+                            </li>
+
+                        </ul>
+                    </li>
+                    <!--endsite-->
+
+
                     <li class="nav-item pcoded-menu-caption">
                         <label>Cadastros</label>
                     </li>
@@ -130,3 +158,4 @@
             </div>
         </div>
     </nav>
+{% endif %}
