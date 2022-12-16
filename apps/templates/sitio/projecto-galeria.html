@@ -1,0 +1,78 @@
+{% extends "layouts/base_site.html" %}
+
+{% block title %} Home {% endblock %}
+
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    {% if projectos|length != 0 %}
+    <section id="services" class="services section-bg">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Services</h2>
+          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+        </div>
+
+        <div class="row">
+          {% for p in projectos %}
+          <div class="col-lg-4 col-md-6 icon-box">
+            {% if p.imagem %}
+                {% load static %}
+                  <img src="{% static  p.imagem.url %}" width="200px"
+                      class="rounded mx-auto d-block">
+            {% else %}
+                <div class="icon"><i class="bi bi-cpu"></i></div>
+            {% endif %}
+            <br />
+            <h4 class="title"><a href="{% url 'projecto_galeria' p.id %}">{{p.designacao}}</a></h4>
+            <p class="description">{{p.descricao}}</p>
+          </div>
+          {% endfor %}
+
+        </div>
+
+      </div>
+    </section>
+    {% endif %}
+    <!-- End Services Section -->
+
+    {% if lista|length != 0 %}
+    <section id="portfolio" class="portfolio">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Galeria</h2>
+        </div>
+
+        <div class="row portfolio-container">
+
+          {% load static %}
+          {% for g in lista %}
+          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+            <div class="portfolio-wrap">
+              <img src="{% static  g.imagem.url %}" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h3><a href="assets/img/portfolio/portfolio-1.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 1">{{ g.descricao }}</a></h3>
+<!--                <div>-->
+<!--                  <a href="assets/img/portfolio/portfolio-1.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 1"><i class="bi bi-plus"></i></a>-->
+<!--                  <a href="portfolio-details.html" title="Details"><i class="bi bi-link"></i></a>-->
+<!--                </div>-->
+              </div>
+            </div>
+          </div>
+
+          {% endfor %}
+
+        </div>
+
+      </div>
+    </section><!-- End Our Portfolio Section -->
+    {% endif %}
+
+
+  {% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

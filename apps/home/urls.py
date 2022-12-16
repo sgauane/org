@@ -20,6 +20,8 @@ urlpatterns = [
     path('site/valores/registar/', valores_registar, name='valores_register'),
     path('site/valores/detalhes/<id>', valores_show, name='valores_detalhes'),
     path('site/valores/editar/<id>', valores_editar, name='valores_edit'),
+    path('site/valores/editar/<id>', valores_editar, name='valores_edit'),
+    path('site/projectos/galeria/<id>', projecto_galeria, name='projecto_galeria'),
 
     # Matches any html file
     re_path(r'^.*\.*', pages, name='pages'),

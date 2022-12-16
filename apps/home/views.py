@@ -57,6 +57,7 @@ def sitio_inicio(request):
     context = {}
     dao = UtilDao()
     user = request.user
+    orgId = request.session.get("org")
     print("User: ", user)
 
     if request.method == "POST" :
@@ -74,11 +75,17 @@ def sitio_inicio(request):
 
     form = PerguntaForms()
     faqs = dao.findAllPerguntasFrequentes()
+    sobrenos = dao.getSobreNosByOrg(orgId=orgId)
+    valores = dao.findAllValoresByOrg(orgId)
+    projectos = dao.findAllProjectosByOrg(orgId)
 
     print("Perguntas:", len(faqs))
 
     context["form"] = form
     context["faqs"] = faqs
+    context["sobrenos"] = sobrenos
+    context["valores"] = valores
+    context["projectos"] = projectos
 
     html_template = loader.get_template('sitio/index.html')
     return HttpResponse(html_template.render(context, request))
@@ -241,5 +248,27 @@ def valores_list(request):
     context["lista"] = lista
 
     return render(request, "home/valores/list.html", context)
+
+def projectos_list(request):
+    dao = UtilDao()
+    context = {}
+
+    orgId = request.session.get("org")
+
+    lista = dao.findAllProjectosByOrg(orgId)
+
+    context["lista"] = lista
+
+    return render(request, "home/valores/list.html", context)
+
+def projecto_galeria(request, id):
+    dao = UtilDao()
+    context = {}
+
+    lista = dao.findAllGaleriaByProjecto(id)
+
+    context["lista"] = lista
+
+    return render(request, "sitio/projecto-galeria.html", context)
 
 

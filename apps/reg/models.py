@@ -99,7 +99,7 @@ def user_directory_path(instance, ficheiro):
 
 def get_upload_path(instance, filename):
     print('instance:',instance.usuario_criacao, 'Filename:', filename)
-    return 'imagens/avatar/usuario_{0}/{1}'.format(instance.usuario_criacao.username, filename)
+    return 'imagens/usuario_{0}/{1}/avatar'.format(instance.usuario_criacao.username, filename)
 
 
 class Imagem(ModeloBase):
@@ -222,5 +222,20 @@ class Membro(Contrato):
 
 class Cargo(ModeloBase):
     designacao = models.CharField(max_length=255)
+
+
+class Items(ModeloBase):
+    designacao = models.CharField(max_length=255)
+
+
+class ItemsFavoritos(ModeloBase):
+    organizacao = models.ForeignKey(Organizacao, on_delete=models.CASCADE, )
+    item = models.ForeignKey(Items, on_delete=models.SET_NULL, null=True)
+
+
+class ItemPreco(ModeloBase):
+    valor = models.DecimalField(max_digits=7, decimal_places=2)
+    organizacao = models.ForeignKey(Organizacao, on_delete=models.CASCADE,)
+    item = models.ForeignKey(Items, on_delete=models.SET_NULL, null=True)
 
 

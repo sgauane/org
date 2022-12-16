@@ -1,4 +1,5 @@
 from apps.home.models import Perguntas, SobreNos, Valores
+from apps.projectos.models import Projecto, Recurso, ProjectoGaleria
 from apps.reg.models import Organizacao, Endereco, Imagem, Pessoa, Membro, ModificadoresContrato
 
 
@@ -158,6 +159,61 @@ class UtilDao:
         try:
             print('Entrou no try')
             lista = Valores.objects.filter(organizacao=orgId)
+            print(lista)
+            print('Object ok. -> ')
+            return lista
+        except Exception as e:
+            print('Ops bug, Entrou no exception', str(e))
+        return None
+
+    def findAllProjectosByOrg(self, orgId):
+        try:
+            print('Entrou no try')
+            lista = Projecto.objects.filter(organizacao=orgId)
+            print(lista)
+            print('Object ok. -> ')
+            return lista
+        except Exception as e:
+            print('Ops bug, Entrou no exception', str(e))
+        return None
+
+    def getProjecto(self, id):
+        try:
+            print('Entrou no try')
+            obj = Projecto.objects.get(pk=id)
+            print(obj)
+            print('Object ok. -> ')
+            return obj
+        except Exception as e:
+            print('Ops bug, Entrou no exception', str(e))
+        return None
+
+    def findAllRecursosByOrg(self, orgId):
+        try:
+            print('Entrou no try')
+            lista = Recurso.objects.filter(organizacao=orgId)
+            print(lista)
+            print('Object ok. -> ')
+            return lista
+        except Exception as e:
+            print('Ops bug, Entrou no exception', str(e))
+        return None
+
+    def getValores(self, id):
+        try:
+            print('Entrou no try')
+            obj = Recurso.objects.get(pk=id)
+            print(obj)
+            print('Object ok. -> ')
+            return obj
+        except Exception as e:
+            print('Ops bug, Entrou no exception', str(e))
+        return None
+
+    def findAllGaleriaByProjecto(self, projId):
+        try:
+            print('Entrou no try')
+            lista = ProjectoGaleria.objects.filter(projecto=projId)
             print(lista)
             print('Object ok. -> ')
             return lista

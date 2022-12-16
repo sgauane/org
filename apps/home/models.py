@@ -38,6 +38,13 @@ class Valores(ModeloBase):
     organizacao = models.ForeignKey(Organizacao, on_delete=models.CASCADE)
     designacao = models.CharField(max_length=255)
 
+    class Meta:
+        verbose_name = 'Valor'
+        verbose_name_plural = 'Valores'
+
+    def __str__(self):
+        return self.designacao
+
 
 class Equipa(Pessoa):
     cargo = models.ForeignKey(Cargo, on_delete=models.SET_NULL, null=True)
